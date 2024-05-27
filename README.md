@@ -1,4 +1,4 @@
-# OAI-PMH Viewer
+# OAI-PMH Viewer Example
 
 ## Building the service
 
