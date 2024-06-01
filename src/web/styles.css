@@ -17,7 +17,7 @@ button:hover {
     background-color: yellowgreen;
 }
 div {
-    border-color: gray; 
+    border-color: blue; 
     border-width: 0px ;
     border-style: solid ;
  //   background-color: gray;
@@ -32,7 +32,7 @@ div#container-div {
     margin: 10px ;
 }
 div#schema-div {
-//    background-color: lightblue ;
+//    background-color: blue ;
 }
 div#schema-table-div {
 //    background-color: orangered ;
