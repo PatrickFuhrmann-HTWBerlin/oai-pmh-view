@@ -28,4 +28,8 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
       
     - name: Build and push Docker image
-      run: docker buildx build  --tag ghcr.io/patrickfuhrmann/oai-pmh-view:4.4 --push .
+      run: |
+        REPO_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+        docker build -t oai-pmh-view:latest .
+        docker tag oai-pmh-view:latest ghcr.io/${{ github.repository_owner }}/$REPO_NAME:latest
+        docker push ghcr.io/${{ github.repository_owner }}/$REPO_NAME:latest
