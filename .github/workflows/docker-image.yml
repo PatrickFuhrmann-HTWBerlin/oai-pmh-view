@@ -26,7 +26,7 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GHCR_PAT }}
-      
+
     - name: Build and push Docker image
       run: |
         REPO_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
@@ -34,3 +34,4 @@ jobs:
         docker build -t oai-pmh-view:latest .
         docker tag oai-pmh-view:latest ghcr.io/$REPO_USER/$REPO_NAME:latest
         docker push ghcr.io/$REPO_USER/$REPO_NAME:latest
+        
