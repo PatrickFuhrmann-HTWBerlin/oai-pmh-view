@@ -12,7 +12,7 @@ Key | Description | Default
 ---:| ------- | ------
 WEB_PORT   | HTTP Port Number| 80
 HTTPS_PORT | HTTPS Port Number | 443
-SITES_CONF | OAI-PMH Sites Configuration| 'view.json'
+SITES_CONF | OAI-PMH Sites Configuration| 'src/view.json'
 CERT_PATH  |Cert Full Chain| defaultCertPath 
 KEY_PATH   |Cert Private Key | defaultKeyPath 
 SECURE     | Should use https | false 
