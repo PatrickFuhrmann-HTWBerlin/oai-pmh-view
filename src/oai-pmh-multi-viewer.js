@@ -25,6 +25,14 @@ const keyPath  = KEY_PATH
 var configs   = [] ;
 var endpoints = [] ;
 
+console.log("WEB_PORT       -> " + WEB_PORT );
+console.log("HTTPS_PORT     -> " + HTTPS_PORT );
+console.log("SITES_CONF     -> " + SITES_CONF );
+console.log("CERT_PATH      -> " + CERT_PATH );
+console.log("KEY_PATH       -> " + KEY_PATH );
+console.log("doRedirect     -> " + doRedirect );
+console.log("HTTPS_REDIRECT -> " + HTTPS_REDIRECT );
+
 const app = express();
 var httpsServer ;
 
@@ -168,21 +176,24 @@ function andGo(){
    }
    endpoints = JSON.parse(JSON.stringify(configs));
 
-   const options =
-       doRedirect ?
-      {
+
+   if( doRedirect ){
+      const options = {
              cert: fs.readFileSync(certPath),
              key:  fs.readFileSync(keyPath)
-           } : {} ;
-
-   httpsServer = https.createServer(options, app);
+      } ;
+      httpsServer = https.createServer(options, app);
+   }else{
+      httpsServer = http.createServer( {} , app);
+   }
 
    initRoutes( configs );
    //
    // Start the HTTPS server
    //  
-   httpsServer.listen(HTTPS_PORT, () => {
-       console.log(`HTTPS Server running on port ${HTTPS_PORT}`);
+   const port = doRedirect ? HTTPS_PORT : WEB_PORT ;
+   httpsServer.listen( port , () => {
+       console.log(`Server running on port ${port}`);
        configs.forEach( ex => {
          console.log(`Server connecting to ${ex.key} ${ex.server} ${ex.prefix}`);
       })
