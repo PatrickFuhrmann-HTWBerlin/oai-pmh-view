@@ -15,7 +15,8 @@
     "key": "datacite",
     "server": "https://oai.datacite.org",
     "prefix": "/oai",
-    "description": "Datecite.org"
+    "description": "Datecite.org",
+    "type": "harvester"
  } ,
  {
     "key": "ESRF",
@@ -49,7 +50,8 @@
   {  "key": "B2FIND",
     "server": "https://b2find.eudat.eu",
     "prefix": "/oai",
-    "description": "B2Find harvester"
+    "description": "B2Find harvester",
+    "type": "harvester"
   },
   {  "key": "SURF",
     "server": "https://repository.surfsara.nl",

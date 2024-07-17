@@ -5,6 +5,7 @@ let current_schema      = 'oai_dc' ;
 let current_service  ; 
 let availableSchemas    = {} 
 let availableEndpoints  = {}
+let availableHarvester  = {}
 let errorMessage = document.getElementById('errorMessage');
 if( errorMessage ){
     errorMessage.onclick = function() {
@@ -105,9 +106,10 @@ function fetchEndpoints() {
     pleaseWait( true )
     fetch('/endpoints')
         .then(response => { pleaseWait(false) ; return response.json() } )
-        .then(data => { 
+        .then(data => {
             storeEndpoints( data )
-            createServerTable( availableEndpoints ) 
+            createServerTable( availableEndpoints )
+            createHarvesterTable( availableHarvester )
         } )
         .catch(err => console.error('Error loading Endpoint Data: ', err))
         .finally(() => { }  );
@@ -147,11 +149,19 @@ function storeEndpoints( endpoints) {
 // ---------------------------------------
     console.log(endpoints)
     availableEndpoints = endpoints.reduce((acc, item) => {
-      acc[item.key] = item;
-      return acc;
+        if( item.type && ( item.type == 'harvester' ) )return acc ;
+        acc[item.key] = item;
+        return acc;
+     }, {});
+     availableHarvester = endpoints.reduce((acc, item) => {
+        if( ! ( item.type && ( item.type == 'harvester' ) ) )return acc ;
+        acc[item.key] = item;
+        return acc;
      }, {});
     console.log("availableEndpoints")
     console.log(availableEndpoints)
+    console.log("availableHarvester")
+    console.log(availableHarvester)
 }  
 // ---------------------------------------
 function getKey( item , key ){
@@ -368,6 +378,9 @@ function on_server_click( details ){
    const server_name = details.srcElement.innerText ;
    setSchemaHeader( server_name )
    current_service = availableEndpoints[server_name] ;
+   if( ! ( current_service = availableEndpoints[server_name] ) ){
+        current_service = availableHarvester[server_name]
+   }
    clearSchemaTable()
    clearDetailTable()
    clearDirectoryTable()
@@ -376,8 +389,18 @@ function on_server_click( details ){
 // server-table-div
 // ---------------------------------------
 function createServerTable( servers ){
-    // ---------------------------------------
-        const div_container = document.getElementById('server-container');
+// ---------------------------------------
+    createServerHarvesterTable( servers , 'server-container' )
+}
+// ---------------------------------------
+function createHarvesterTable( servers ){
+// ---------------------------------------
+    createServerHarvesterTable( servers , 'harvester-container' )
+}
+// ---------------------------------------
+function createServerHarvesterTable( servers , servertype ){
+// ---------------------------------------
+        const div_container = document.getElementById(servertype);
         for( const k in servers ){
             
             const button  = document.createElement('button');
