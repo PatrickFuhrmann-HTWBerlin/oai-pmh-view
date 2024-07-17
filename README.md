@@ -25,7 +25,14 @@ Configuration file format:
     "key": "HTW",
     "server": "http://localhost:7002",
     "prefix": "/scicat/oai",
-    "description": "HTW Example Scicat"
+    "description": "HTW Example Scicat",
+ } ,
+ {
+    "key": "B2FIND",
+    "server": "http://b2find.eudat.eu:7002",
+    "prefix": "/scicat/oai",
+    "description": "B2Find (EUDAT) Harvester",
+    "type": "harvester"
  } ,
  {
     "key": "HZDR",
