@@ -5,7 +5,6 @@
 ```
 docker build -t oai-pmh-view .
 ```
-
 ### Starting the multi service (Docker only, no docker compose)
 
 Key | Description | Default
